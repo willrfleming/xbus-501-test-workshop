@@ -43,69 +43,132 @@ class GarageTests(unittest.TestCase):
         g = Garage(name)
         self.assertEqual(name, g.name)
 
-    @skip('pending test code')
     def test_allows_cars_to_enter(self):
         """
         Ensure the garage allows Car object to enter
         """
-        pass
+        c = Car(color= 'yellow', make='honda', model='civic')
+        g = Garage(name='test_garage')
+        g.enter(c)
 
-    @skip('pending test code')
+
     def test_ensure_cars_enter_fully(self):
         """
         Ensure vehicle is in garage after it enters (eg: vehicle in garage == True)
         """
-        pass
+        d = Car(color= 'yellow', make='honda', model='civic')
+        g = Garage(name='test_garage')
+        g.enter(d)
+        self.assertEqual(d in g.vehicles, True)
 
-    @skip('pending test code')
     def test_only_allows_cars_to_enter(self):
         """
         Ensure the garage raises TypeError if non vehicle attempts to enter
         """
-        pass
+        f = 'Frank'
+        g = Garage(name='test_garage')
+        try:
+            g.enter(f)
+        except TypeError as e:
+            try:
+                self.assertEqual("Only vehicles are allowed in garages", str(e))
+            except AssertionError:
+                self.fail('Could not raise TypeError on non-vehicle entering')
 
-    @skip('pending test code')
+
+
     def test_only_allows_cars_to_exit(self):
         """
         Ensure the garage raises TypeError if non vehicle attempts to exit
         """
-        pass
+        f = 'Frank'
+        g = Garage(name='test_garage')
+        try:
+            g.exit(f)
+        except TypeError as e:
+            try:
+                self.assertEqual("Only vehicles are allowed in garages.", str(e))
+            except AssertionError:
+                self.fail('Could not raise TypeError on non-vehicle entering')
 
-    @skip('pending test code')
     def test_allows_cars_to_exit(self):
         """
         Ensure vehicles can leave the garage
         """
-        pass
+        d = Car(color= 'yellow', make='honda', model='civic')
+        g = Garage(name='test_garage')
+        g.enter(d)
+        g.exit(d)
 
-    @skip('pending test code')
+
     def test_ensure_cars_exit_fully(self):
         """
-        Ensure vehicle is not in garage after it exits
+        Vehicle is not in garage after it exits
         """
-        pass
+        d = Car(color= 'yellow', make='honda', model='civic')
+        g = Garage(name='test_garage')
+        g.enter(d)
+        g.exit(d)
 
-    @skip('pending test code')
+        try:
+            self.assertEqual(d in g.vehicles,False)
+        except AssertionError:
+            self.fail('Could not ensure vehicle is not in garage after it exits')
+
     def test_raise_lookup_error_on_exit(self):
         """
         Ensure that garage raises LookupError if vehicle attempts
         to exit but was never in garage.
         """
-        pass
+        d = Car(color= 'yellow', make='honda', model='civic')
+        g = Garage(name='test_garage')
+        try:
+            g.exit(d)
+        except LookupError as e:
+            try:
+                self.assertEqual(str(e),"That vehicle is not in test_garage.")
+            except AssertionError:
+                self.fail('Could not ensure that garage raises LookupError if vehicle attempts to exit but was never in garage.')
 
-    @skip('pending test code')
     def test_iter_builtin(self):
         """
         Ensure we can iterate over garage vehicles by trying to
         iterate over the garage itself
         """
-        pass
+        gg = Garage(name='test_garage')
+        a = Car(color= 'red', make='honda', model='civic')
+        b = Car(color= 'white', make='honda', model='civic')
+        c = Car(color= 'green', make='honda', model='civic')
+        gg.enter(a)
+        gg.enter(b)
+        gg.enter(c)
 
-    @skip('pending test code')
+        manual_list = [a,b,c]
+        garage_test_list = [v for v in gg]
+
+        try:
+            self.assertEqual(garage_test_list, manual_list)
+        except AssertionError:
+            self.fail('Could not ensure we can iterate over garage vehicles by trying to iterate over the garage itself')
+
     def test_len_builtin(self):
         """
         Ensure that the length of the garage matches the number
         of vehicles parked in it
         """
-        pass
+        g = Garage(name='test_garage')
+        a = Car(color= 'red', make='honda', model='civic')
+        b = Car(color= 'white', make='honda', model='civic')
+        c = Car(color= 'blue', make='honda', model='civic')
+        g.enter(a)
+        g.enter(b)
+        g.enter(c)
+
+        manual_list = len([a,b,c])
+        garage_test_list = len([v for v in g])
+
+        try:
+            self.assertEqual(garage_test_list, manual_list)
+        except AssertionError:
+            self.fail('Could not ensure we can iterate over garage vehicles by trying to iterate over the garage itself.')
 

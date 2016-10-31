@@ -36,7 +36,9 @@ class BaseBuilding(object):
 
 class Garage(BaseBuilding):
 
-    vehicles = []
+    def __init__(self, name):
+        self.vehicles = []
+        super(Garage, self).__init__(name)
 
     def enter(self, vehicle):
         """
